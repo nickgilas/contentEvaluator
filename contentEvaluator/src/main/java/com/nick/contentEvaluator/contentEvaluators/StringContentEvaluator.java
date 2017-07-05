@@ -5,6 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * This evaluator implementation compares 2 strings and calculates the
+ * differences. If the the difference surpasses a predetermined threshold then
+ * it will return True.
+ * 
+ * @author Nick Gilas
+ *
+ */
 @Component
 public class StringContentEvaluator implements ContentEvaluator<String> {
 
@@ -33,7 +41,7 @@ public class StringContentEvaluator implements ContentEvaluator<String> {
 		
 		logger.debug("Diff lenght: " + diffLength);
 
-		boolean result = diffLength > diffThresholdPercent;
+		boolean result = diffLength >= diffThresholdPercent;
 		logger.debug("Has content changed: " + result);
 		
 		return result;

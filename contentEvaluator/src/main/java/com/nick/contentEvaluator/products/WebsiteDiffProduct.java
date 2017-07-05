@@ -1,5 +1,6 @@
 package com.nick.contentEvaluator.products;
 
+import java.io.Serializable;
 import java.net.URL;
 
 import org.slf4j.Logger;
@@ -31,11 +32,7 @@ import com.nick.contentEvaluator.output.OutputDestinationFactory.OutputType;
 @Component
 @Scope(scopeName = "prototype")
 public class WebsiteDiffProduct implements Product {
-	private static Logger logger = LoggerFactory.getLogger(WebsiteDiffProduct.class);
-
-	private ContentProvider<URL> provider;
-	private ContentEvaluator<String> evaluator;
-	private OutputDestination<EmailParams> emailOutput;
+	private static final Logger logger = LoggerFactory.getLogger(WebsiteDiffProduct.class);
 
 	@Autowired
 	private ContentProviderFactory providerFactory;
@@ -45,20 +42,24 @@ public class WebsiteDiffProduct implements Product {
 
 	@Autowired
 	private OutputDestinationFactory outputFactory;
-	
+
 	@Value("${diff.threashold.percent}")
 	private Integer diffThresholdPercent;
+
+	private ContentProvider<URL> provider;
+	private ContentEvaluator<String> evaluator;
+	private OutputDestination<EmailParams> emailOutput;
 
 	private URL url;
 	private boolean isInit = false;
 	private String cachedContent;
-	
 
 	@SuppressWarnings("unchecked")
-	public void init(URL siteUrl) {
+	@Override
+	public <T extends Serializable> void init(T siteUrl) {
 
-		this.url = siteUrl;
-		provider = (ContentProvider<URL>) providerFactory.getContentProvider(ContentType.URL); 
+		this.url = (URL) siteUrl;
+		provider = (ContentProvider<URL>) providerFactory.getContentProvider(ContentType.URL);
 		evaluator = evaluatorFactory.getStringContentEvaluator();
 		emailOutput = outputFactory.getOutputDestination(OutputType.EMAIL);
 
@@ -67,6 +68,7 @@ public class WebsiteDiffProduct implements Product {
 		isInit = true;
 	}
 	
+
 	@Override
 	public void run() {
 		logger.debug("Starting to execute product: " + getClass().getName());
@@ -93,4 +95,5 @@ public class WebsiteDiffProduct implements Product {
 				"The content for your interested site has been altered more then the threashold", 
 				"Site Content Has Changed");
 	}
+
 }

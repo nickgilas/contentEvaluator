@@ -4,6 +4,7 @@
 package com.nick.contentEvaluator.contentProviders;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URL;
 
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class FileContentProvider implements ContentProvider<File> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getContents(File file) {
+	public <T extends Serializable> T getContents(File file) {
 		
 		try {
 			

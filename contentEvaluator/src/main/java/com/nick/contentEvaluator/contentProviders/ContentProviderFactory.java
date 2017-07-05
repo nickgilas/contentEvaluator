@@ -22,18 +22,18 @@ public class ContentProviderFactory {
 		URL(new UrlContentProvider()), 
 		FILE(new FileContentProvider());
 		
-		private ContentProvider<?> provider;
+		private ContentProvider provider;
 		
-		private ContentType(ContentProvider<?> provider) {
+		private ContentType(ContentProvider provider) {
 			this.provider = provider;
 		}
 		
-		protected ContentProvider<?> getProvider() {
+		protected ContentProvider getProvider() {
 			return provider;
 		}
 	}
 	
-	public ContentProvider<?> getContentProvider(ContentType type) {
+	public ContentProvider getContentProvider(ContentType type) {
 		return type.getProvider();
 	}
 	

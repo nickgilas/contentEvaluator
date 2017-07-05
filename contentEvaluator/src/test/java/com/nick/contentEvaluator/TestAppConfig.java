@@ -25,6 +25,7 @@ public class TestAppConfig {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 
+	// mock version of email output
 	@Bean(name = "emailOutput")
 	public OutputDestination<EmailParams> emailOutput() {
 		return emailOutputMock;

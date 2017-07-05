@@ -3,6 +3,7 @@ package com.nick.contentEvaluator.contentProviders;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -23,8 +24,9 @@ public class UrlContentProvider implements ContentProvider<URL> {
 	
 	private static final Charset CHAR_SET = Charset.forName("UTF-8");
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public  String getContents(URL url) {
+	public <T extends Serializable> T getContents(URL url) {
 
 		if (url == null) {
 			logger.warn("Input url is null");
@@ -42,7 +44,7 @@ public class UrlContentProvider implements ContentProvider<URL> {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(input, CHAR_SET))) {
 
 			reader.lines().forEach(l -> content.append(l));
-			return content.toString();
+			return (T) content.toString();
 			
 		} catch (Exception e) {
 			logger.error("Unknown error occurred while trying to read the url contents: " + e.getMessage(), e);

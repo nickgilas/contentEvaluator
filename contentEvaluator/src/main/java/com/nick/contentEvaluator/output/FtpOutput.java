@@ -2,6 +2,13 @@ package com.nick.contentEvaluator.output;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * POC example of application extension which would handle sending output data
+ * to an remote FTP site
+ * 
+ * @author Nick Gilas
+ *
+ */
 @Component
 public class FtpOutput extends BaseOutputDestination<String> {
 

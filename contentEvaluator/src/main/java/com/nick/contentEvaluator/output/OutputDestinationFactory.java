@@ -10,6 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+/**
+ * Factory to handling the mapping of an {@link OutputDestination} to an
+ * {@link OutputType}
+ * 
+ * @author Nick
+ *
+ */
 @Component
 public class OutputDestinationFactory {
 
@@ -33,6 +40,8 @@ public class OutputDestinationFactory {
 		map.put(OutputType.EMAIL, emailOutput);
 		map.put(OutputType.FTP, ftpOutput);
 	}
+
+	@SuppressWarnings("unchecked")
 	public <T extends Serializable> OutputDestination<T> getOutputDestination(OutputType outputType) {
 			return (OutputDestination<T>) map.get(outputType);
 	}

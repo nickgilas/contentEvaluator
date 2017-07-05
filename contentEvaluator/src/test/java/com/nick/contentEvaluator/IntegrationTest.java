@@ -14,9 +14,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * Purpose of this class is to test the core functionality 
- * of the individual content evaluators and the content providers.
- * Hence, Spring isn't utilized and the timer functionality isn't enabled.
+ * Integration test that starts up Spring within a test contents and associated
+ * test property data. It will do an end to end test of evaluating an html test
+ * file and ensure everything is working as expected
  * 
  * @author Nick Gilas
  *
@@ -54,23 +54,27 @@ public class IntegrationTest {
 			// underlying website data
 			Thread.sleep(2500);
 
-			swithFileData(site1Url, site2Url);
+			switchFileData(site1Url, site2Url);
 
 			logger.info("Renamed files");
 
+			// wait for another execution (2 seconds) to complete and verify the
+			// results
 			Thread.sleep(3000);
 
-			// assert that the email output was called
+			// assert that the email output was called because of the content
+			// changed diff
 			Mockito.verify(testAppConfig.emailOutput(), Mockito.times(1)).sendContents(Mockito.any());
 
 			logger.info("Finished executing the integration test");
 		} finally {
+			// reset test data
 			renameFiles();
 		}
 		
 	}
 
-	private void swithFileData(URL site1Url, URL site2Url) {
+	private void switchFileData(URL site1Url, URL site2Url) {
 		File site1File = new File(site1Url.getFile());
 
 		site1File.renameTo(new File(site1File.getParent(), "site1.html.tmp"));

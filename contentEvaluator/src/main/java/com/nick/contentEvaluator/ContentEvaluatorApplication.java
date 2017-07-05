@@ -15,15 +15,16 @@ import org.springframework.stereotype.Component;
 
 import com.nick.contentEvaluator.products.WebsiteDiffProduct;
 
-//  https://github.com/nickgilas/contentEvaluator
 /**
- * Write an application and applicable unit test that polls a URL at a certain 
- * interval and sends an email to someone if more than 10% of the content on 
- * the page has changed. The intent is that this application can be used in a 
- * wide variety of use cases: monitoring a changelog online, watching for when 
- * tickets an event become available etc. Please ask any questions you like 
- * and searching online is encouraged."
- *  
+ * Write an application and applicable unit test that polls a URL at a certain
+ * interval and sends an email to someone if more than 10% of the content on the
+ * page has changed. The intent is that this application can be used in a wide
+ * variety of use cases: monitoring a changelog online, watching for when
+ * tickets an event become available etc. Please ask any questions you like and
+ * searching online is encouraged."
+ * 
+ * https://github.com/nickgilas/contentEvaluator
+ * 
  * @author Nick Gilas
  * @since June 29th, 2017
  *
@@ -59,6 +60,11 @@ public class ContentEvaluatorApplication {
 			int initalDelay = 1;
 			executor.scheduleWithFixedDelay(product, initalDelay, intervalCheckTimeSeconds, TimeUnit.SECONDS);
 			
+			// keep this main thread alive. Full implementation would have a
+			// mechanism to shut down the app gracefully
+			while (executor.isTerminated()) {
+				Thread.sleep(10000);
+			}
 		} catch (Throwable t) {
 			logger.error("Error occurred while processing content: " + t.getMessage(), t);
 			System.exit(-1);
