@@ -1,4 +1,4 @@
-package com.nick.monitor;
+package com.nick.contentEvaluator.products;
 
 public class FileDiffProduct implements Product {
 

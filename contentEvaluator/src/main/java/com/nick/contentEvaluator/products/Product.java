@@ -1,4 +1,4 @@
-package com.nick.monitor;
+package com.nick.contentEvaluator.products;
 
 /**
  * Used to enforce all implementations adhere to to the {@link Runnable}

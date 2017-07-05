@@ -1,4 +1,4 @@
-package com.nick.monitor;
+package com.nick.contentEvaluator.contentProviders;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -8,10 +8,10 @@ import java.net.URL;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.nick.monitor.contentProviders.ContentProvider;
-import com.nick.monitor.contentProviders.ContentProviderFactory;
-import com.nick.monitor.contentProviders.ContentProviderFactory.ContentType;
-import com.nick.monitor.contentProviders.UrlContentProvider;
+import com.nick.contentEvaluator.contentProviders.ContentProvider;
+import com.nick.contentEvaluator.contentProviders.ContentProviderFactory;
+import com.nick.contentEvaluator.contentProviders.UrlContentProvider;
+import com.nick.contentEvaluator.contentProviders.ContentProviderFactory.ContentType;
 
 public class UrlContentProviderTest {
 

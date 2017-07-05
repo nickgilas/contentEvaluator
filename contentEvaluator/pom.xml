@@ -64,21 +64,38 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+	
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+			
 		<!-- https://mvnrepository.com/artifact/cglib/cglib -->
 		<!-- needed by spring -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>3.2.5</version>
-		</dependency>
+			</dependency>
 
 	</dependencies>
 	
-	<resources>	
-    <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-    </resource>
-</resources>
-
+	<build>
+	<resources>
+		<resource>
+			<directory>src/main/resources</directory>
+			<filtering>true</filtering>
+		</resource>
+	</resources>
+</build>
 </project>

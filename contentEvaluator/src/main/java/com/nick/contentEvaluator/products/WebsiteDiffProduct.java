@@ -1,4 +1,4 @@
-package com.nick.monitor;
+package com.nick.contentEvaluator.products;
 
 import java.net.URL;
 
@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.nick.monitor.contentEvaluators.ContentEvaluator;
-import com.nick.monitor.contentEvaluators.ContentEvaluatorFactory;
-import com.nick.monitor.contentProviders.ContentProvider;
-import com.nick.monitor.contentProviders.ContentProviderFactory;
-import com.nick.monitor.contentProviders.ContentProviderFactory.ContentType;
-import com.nick.monitor.output.EmailParams;
-import com.nick.monitor.output.OutputDestination;
-import com.nick.monitor.output.OutputDestinationFactory;
-import com.nick.monitor.output.OutputDestinationFactory.OutputType;
+import com.nick.contentEvaluator.contentEvaluators.ContentEvaluator;
+import com.nick.contentEvaluator.contentEvaluators.ContentEvaluatorFactory;
+import com.nick.contentEvaluator.contentProviders.ContentProvider;
+import com.nick.contentEvaluator.contentProviders.ContentProviderFactory;
+import com.nick.contentEvaluator.contentProviders.ContentProviderFactory.ContentType;
+import com.nick.contentEvaluator.output.EmailParams;
+import com.nick.contentEvaluator.output.OutputDestination;
+import com.nick.contentEvaluator.output.OutputDestinationFactory;
+import com.nick.contentEvaluator.output.OutputDestinationFactory.OutputType;
 
 /**
  * This product is used to monitor content for any
@@ -61,12 +61,16 @@ public class WebsiteDiffProduct implements Product {
 		provider = (ContentProvider<URL>) providerFactory.getContentProvider(ContentType.URL); 
 		evaluator = evaluatorFactory.getStringContentEvaluator();
 		emailOutput = outputFactory.getOutputDestination(OutputType.EMAIL);
+
+		// prime the cache
+		cachedContent = provider.getContents(url);
 		isInit = true;
 	}
 	
 	@Override
 	public void run() {
-	
+		logger.debug("Starting to execute product: " + getClass().getName());
+
 		if (!isInit) {
 			logger.warn("Product is not initialized, call the init() method first");
 			return;
@@ -74,7 +78,10 @@ public class WebsiteDiffProduct implements Product {
 
 		String currentContent = provider.getContents(url);
 		if (evaluator.isContentDifferent(cachedContent, currentContent, diffThresholdPercent)) {
+			logger.debug("Content has changed, sending output");
 			emailOutput.sendContents(buildEmailParams("Alert - Website has changed more then: %" + diffThresholdPercent));
+		} else {
+			logger.debug("Content has not changed");
 		}
 		
 		// update cache

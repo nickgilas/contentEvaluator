@@ -1,4 +1,4 @@
-package com.nick.monitor;
+package com.nick.contentEvaluator;
 
 import java.net.URL;
 import java.util.concurrent.Executors;
@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+
+import com.nick.contentEvaluator.products.WebsiteDiffProduct;
 
 //  https://github.com/nickgilas/contentEvaluator
 /**
@@ -40,32 +42,34 @@ public class ContentEvaluatorApplication {
 	@Value("${interval.check.time.seconds}")
 	private Integer intervalCheckTimeSeconds;
 	
-	public void start() {
+	public void start(URL url) {
 	
 		try {	
 			logger.debug("Starting to run {}", ContentEvaluatorApplication.class.getName());
+
+			ScheduledExecutorService executor = Executors.newScheduledThreadPool(scheduledWorkerNumOfThreads);
+
+			// create all of the content evaluators and schedule their execution
 			
 			// Note: in a final production version of the application this is
 			// where logic should to load products with customer specific data
 			// and schedule the product to execute
 
-			ScheduledExecutorService executor = Executors.newScheduledThreadPool(scheduledWorkerNumOfThreads);
-		
-			// create all of the content evaluators and schedule their execution
-			product.init(new URL("site1.html"));
-
-			executor.scheduleWithFixedDelay(product, 1, intervalCheckTimeSeconds, TimeUnit.SECONDS);
+			product.init(url);
+			int initalDelay = 1;
+			executor.scheduleWithFixedDelay(product, initalDelay, intervalCheckTimeSeconds, TimeUnit.SECONDS);
 			
 		} catch (Throwable t) {
 			logger.error("Error occurred while processing content: " + t.getMessage(), t);
 			System.exit(-1);
 		}
 	}
-	public static void main(String[] args) {
+
+	public static void main(String[] args) throws Exception {
 		
 		System.out.println("Starting application");
-		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(TestAppConfig.class);
 		ContentEvaluatorApplication app = (ContentEvaluatorApplication) context.getBean("contentEvaluatorApplication");
-		app.start();
+		app.start(ContentEvaluatorApplication.class.getClassLoader().getResource("site1.html"));
 	}
 }

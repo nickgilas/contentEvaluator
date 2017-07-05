@@ -1,4 +1,4 @@
-package com.nick.monitor.output;
+package com.nick.contentEvaluator.output;
 
 /**
  * This interface allows for the easy addition of new

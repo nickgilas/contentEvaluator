@@ -1,4 +1,4 @@
-package com.nick.monitor.contentProviders;
+package com.nick.contentEvaluator.contentProviders;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.nick.monitor.contentProviders;
+package com.nick.contentEvaluator.contentProviders;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * This implementation can read the contents of remote URI data and return a String version of the content
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Nick Gilas
  *
  */
+@Component
 public class UrlContentProvider implements ContentProvider<URL> {
 
 	private static Logger logger = LoggerFactory.getLogger( UrlContentProvider.class );

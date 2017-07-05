@@ -1,4 +1,4 @@
-package com.nick.monitor.dataEvaluators;
+package com.nick.contentEvaluator.contentEvaluators;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.nick.monitor.contentEvaluators.StringContentEvaluator;
+import com.nick.contentEvaluator.contentEvaluators.StringContentEvaluator;
 
 public class StringContentEvaluatorTest {
 

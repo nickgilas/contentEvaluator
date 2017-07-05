@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.nick.monitor.contentProviders;
+package com.nick.contentEvaluator.contentProviders;
 
 import java.io.File;
 import java.net.URL;
@@ -9,8 +9,9 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.nick.monitor.contentProviders.ContentProviderFactory.ContentType;
+import com.nick.contentEvaluator.contentProviders.ContentProviderFactory.ContentType;
 
 /**
  * 
@@ -22,6 +23,7 @@ import com.nick.monitor.contentProviders.ContentProviderFactory.ContentType;
  * @author Nick Gilas
  *
  */
+@Component
 public class FileContentProvider implements ContentProvider<File> {
 	private static Logger logger = LoggerFactory.getLogger( FileContentProvider.class );
 	

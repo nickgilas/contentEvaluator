@@ -1,9 +1,11 @@
-package com.nick.monitor.contentEvaluators;
+package com.nick.contentEvaluator.contentEvaluators;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StringContentEvaluator implements ContentEvaluator<String> {
 
 	private static Logger logger = LoggerFactory.getLogger( StringContentEvaluator.class );
@@ -12,7 +14,6 @@ public class StringContentEvaluator implements ContentEvaluator<String> {
 		
 		Boolean validationResult = validateInput(content1, content2);
 		if (validationResult != null) {
-			logger.debug("Validation resulted were: " + validationResult);
 			return validationResult;
 		}
 		
@@ -30,7 +31,7 @@ public class StringContentEvaluator implements ContentEvaluator<String> {
 		// convert to percent
 		diffLength = diffLength * 100;
 		
-		logger.trace("Diff lenght: " + diffLength);
+		logger.debug("Diff lenght: " + diffLength);
 
 		boolean result = diffLength > diffThresholdPercent;
 		logger.debug("Has content changed: " + result);

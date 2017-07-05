@@ -1,4 +1,4 @@
-package com.nick.monitor.output;
+package com.nick.contentEvaluator.output;
 
 import java.io.Serializable;
 

@@ -1,8 +1,10 @@
-package com.nick.monitor.output;
+package com.nick.contentEvaluator.output;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,14 +20,15 @@ public class OutputDestinationFactory {
 	
 	@Autowired
 	@Qualifier("emailOutput")
-	private OutputDestination<String> emailOutput;
-	
+	private OutputDestination<EmailParams> emailOutput;
+
 	@Autowired
 	@Qualifier("ftpOutput")
 	private OutputDestination<String> ftpOutput;
 	
 	private Map<OutputType, OutputDestination<? extends Serializable>> map = new HashMap<>();
 	
+	@PostConstruct
 	protected void init() {
 		map.put(OutputType.EMAIL, emailOutput);
 		map.put(OutputType.FTP, ftpOutput);
